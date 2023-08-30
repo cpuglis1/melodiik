@@ -1,2 +1,2 @@
 # melodiik
-Music Discovery and Recommendation.
+WIP: Music Discovery and Recommendation.
