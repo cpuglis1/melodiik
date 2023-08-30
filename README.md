@@ -1,2 +1,2 @@
 # melodiik
-Music Discovery and Recommendation System
+Music Discovery and Recommendation.
