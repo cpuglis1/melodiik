@@ -50,4 +50,4 @@ AGENT_LIST = [
 "Mozilla/5.0 (Macintosh; PPC Mac OS X 10.5; FPR5; rv:45.0) Gecko/20100101 Firefox/45.0 TenFourFox/7450"
 ]
 
-alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '19']
+alphabet = ['a']#, 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '19']

@@ -37,7 +37,8 @@ class ScrapeAZ:
                             self.torpy_manager.check_and_rotate_session(sess)
 
                             counter += 1
-                            if counter >= 3:
+                            print(counter)
+                            if counter >= 50:
                                 self.torpy_manager.close_session()
                                 return self.data_handler.lyric_df
 

@@ -1,12 +1,30 @@
 from torpy.http.requests import TorRequests
+from bs4 import BeautifulSoup
 from utils import logger 
+import time
 import random
 
 class TorpyManager:
-    def __init__(self):
-        self.tor_requests = None 
-        self.session = None 
-        self.request_counter = 0 
+    def __init__(self, rate_limit=5):
+        self.tor_requests = None
+        self.session = None
+        self.request_counter = 0
+        self.tokens = rate_limit
+        self.last_check = time.time()
+
+    def _refill_tokens(self):
+        now = time.time()
+        elapsed_time = now - self.last_check
+        self.tokens += elapsed_time
+        self.last_check = now
+
+    def _consume_token(self):
+        if self.tokens < 1:
+            self._refill_tokens()
+        while self.tokens < 1:
+            time.sleep(0.1)
+            self._refill_tokens()
+        self.tokens -= 1
 
     @logger
     def create_session(self, sess):
@@ -38,10 +56,12 @@ class TorpyManager:
 
     @logger
     def request_handler(self, url, AGENT_LIST):
-    
+        self._consume_token() 
+
         for tries in range(3):
             print(f"Try: {tries + 1}")
-            HEADERS = {"User-Agent": random.choice(AGENT_LIST)}
+            random_agent = random.choice(AGENT_LIST)
+            HEADERS = {"User-Agent": random_agent}
             
             try:
                 response = self._send_request(url, HEADERS)
@@ -64,3 +84,9 @@ class TorpyManager:
         self.request_counter += 1  # Update the request counter
         
         return response
+    
+    @logger
+    def check_for_captcha(self, response):
+        soup = BeautifulSoup(response.text, 'html.parser')
+        captcha_present = soup.find("div", {"id": "az_captcha_container"}) is not None
+        return captcha_present
